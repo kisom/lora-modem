@@ -1,4 +1,4 @@
-BOARD :=	adafruit_feather_m0
+BOARD :=	adafruit_feather_m0_pager
 FIRMWARE :=	.pioenvs/$(BOARD)/firmware.bin
 SOURCES :=					\
 		src/main.cc

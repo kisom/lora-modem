@@ -21,3 +21,7 @@ Commands
 + >MESSAGE - transmit message
 
 New messages will be printed with a trailing '<' and are hex-encoded.
+
+TODO:
+[ ] Line wrapping in pager
+[ ] No ident -> read all messages (like a scanner)

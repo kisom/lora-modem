@@ -6,6 +6,12 @@
 #include <feather/wing/rfm95.h>
 #include <Streaming.h>
 
+#if defined(PAGER)
+#include <feather/wing/oled.h>
+
+OLED	display;
+#endif
+
 
 #if defined(FEATHER_M4)
 FeatherM4	board;
@@ -47,6 +53,9 @@ setup()
 	Serial.begin(9600);
 	while (!Serial) ;
 	registerWing(&radio);
+#if defined(PAGER)
+	registerWing(&display);
+#endif
 
 	if (!initialiseWings()) {
 		Serial.println("!BOOT FAILED");
@@ -55,6 +64,10 @@ setup()
 
 	Serial.println("!BOOT OK");
 	scheduleWingTasks();
+
+#if defined(PAGER)
+	display.print(0, "BOOT OK");
+#endif
 }
 
 
@@ -234,6 +247,15 @@ loop()
 			Serial.print(hex);
 		}
 		Serial.println();
+
+#if defined(PAGER)
+		char	sender[7] = {0};
+		char	tline[21] = {0};
+		memcpy(sender, rfmbuf, rcvrStart-1);
+		sprintf(tline, "DE %s", sender);
+		display.iprint(0, tline);
+		display.print(1, rfmbuf+idscanlen+1);
+#endif
 		rfmlen = 0;
 	}
 }
