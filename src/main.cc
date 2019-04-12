@@ -96,6 +96,9 @@ processInput()
 		rfbuflen += (usridx - 1);
 		radio.transmit((uint8_t *)rfbuf, rfbuflen, NULL);
 		Serial.println("*TX SENT");
+#if defined(PAGER)
+		display.print(2, "TX SENT");
+#endif
 		break;
 	case '?':
 		while (usrbuf[cmdlen+1] != ' ' && usrbuf[cmdlen+1] != 0 && cmdlen < 8) {
